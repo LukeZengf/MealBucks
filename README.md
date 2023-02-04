@@ -12,7 +12,7 @@ In addition to the user interface, the app will also need to be able to create o
 
 ### How to run:
 
-Clone the repository and navigate to the directory where the electron app is located. Type "npm start" in the terminal in the same directory. Make sure you have node.js and the necessary packages installed.
+Clone the repository and navigate to the directory where the electron app is located. Setup electron on your own computer using node.js and npm. Then open a terminal and type in "npm start"
 
 
 
