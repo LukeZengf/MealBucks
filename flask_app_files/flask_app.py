@@ -1,16 +1,20 @@
 
 from flask import Flask, jsonify, request
+import chatbot
 
+bot = chatbot.ChatBot()
 app = Flask(__name__)
 
 @app.route('/chatbot', methods=['POST'])
-def chatbot():
+def send_to_chatbot():
     data = request.get_json()
     message = data['message']
-    response = {'message': 'This is a response from the chatbot!'}
+    # Add your chatbot logic here
+
+    model_response = bot.get_message(message)
+    response = {'message': model_response}
     return jsonify(response)
 
 if __name__ == '__main__':
-  app.run()
-
-
+    print("ready")
+    app.run()
