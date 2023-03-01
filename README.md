@@ -12,7 +12,11 @@ In addition to the user interface, the app will also need to be able to create o
 
 ### How to run:
 
+Frontend:
 Clone the repository and navigate to the directory where the electron app is located. Setup electron on your own computer using node.js and npm. Then open a terminal and type in "npm start"
+
+Chatbot:
+Run the flask app in the flask_app_files folder. You may need to install the required packages.
 
 
 
