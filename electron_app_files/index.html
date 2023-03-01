@@ -102,6 +102,28 @@
         const sendButton = document.getElementById('send-button');
         const chatInput = document.querySelector('#chat-input input');
 
+        function handleMessage(){
+          const message = userInput.value;
+          userInput.value = '';
+          addMessage('You', message);
+
+          fetch('http://localhost:5000/chatbot', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              message: message
+            })
+          })
+          .then(response => response.json())
+          .then(data => {
+            const chatbotResponse = data.message;
+            addMessage('Chatbot', chatbotResponse);
+          })
+          .catch(error => console.error(error));
+        }
+
         function addMessage(user, message) {
 
           const messageElement = document.createElement('div');
@@ -122,20 +144,13 @@
 
         chatInput.addEventListener('keydown', (event) => {
           if (event.keyCode === 13) {
-            const message = userInput.value;
-            userInput.value = '';
-            addMessage('You', message);
+            handleMessage();
           }
         });
 
-        sendButton.addEventListener('click', () => {
-          const message = userInput.value;
-          userInput.value = '';
-          addMessage('You', message);
-
-          // TODO: Send message to chatbot and display response
-        });
+        sendButton.addEventListener('click', handleMessage);
       });
+
     </script>
 
 
@@ -144,8 +159,7 @@
   <body>
     <div id="bar"></div>
     <div id="thingy">
-      <h1>Mealbucks</h1>
-      <p>This is a very cool application.</p>
+      <center><h1>Mealbucks</h1></center>
       <div id="chat-container">
         <div id="chat-messages">this is a message area</div>
         <div id="chat-input">
