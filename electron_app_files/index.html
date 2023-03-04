@@ -16,8 +16,14 @@
         background-color: #2f3241;
         -webkit-app-region: drag;
       }
+      html,
+      body{
+        height: calc(100% - 50px);
+        margin-bottom: 0px;
+      }
       #thingy{
         margin-top: 30px;
+        height: 100%;
       }
       ::-webkit-scrollbar {
         width: 12px;
@@ -36,65 +42,7 @@
         background-color: #000000;
       }
     </style>
-
-    <style>
-      #chat-container {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-      }
-
-      #chat-messages {
-        height: 400px;
-        overflow-y: scroll;
-        padding: 10px;
-        background-color: #111111;
-        border-radius: 10px;
-        
-      }
-
-      #chat-messages .message {
-        margin-bottom: 10px;
-      }
-
-      #chat-messages .message .user {
-        font-weight: bold;
-        margin-right: 5px;
-        color: #fff;
-      }
-
-      #chat-messages .message .message-text {
-        color: #ccc;
-      }
-
-      #chat-input {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        background-color: #2f3241;/* #404258; */
-        border-radius: 10px;
-      }
-
-      #chat-input input {
-        flex: 1;
-        margin-right: 10px;
-        border: none;
-        padding: 10px;
-        border-radius: 10px;
-        color: #ffffff;
-        background-color: #404258;/*#474E68;*/
-      }
-
-      #chat-input button {
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-        border-radius: 10px;
-      }
-    </style>
-
+    <link href='assets/css/styles.css' rel='stylesheet'/>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const chatMessages = document.getElementById('chat-messages');
@@ -153,22 +101,22 @@
 
     </script>
 
-
-    <link href='styles.css' rel='stylesheet'/>
   </head>
   <body>
     <div id="bar"></div>
-    <div id="thingy">
-      <center><h1>Mealbucks</h1></center>
-      <div id="chat-container">
-        <div id="chat-messages">this is a message area</div>
-        <div id="chat-input">
-          <input type="text" id="user-input" placeholder="Type your message here...">
-          <button id="send-button">Send</button>
+    <div id = "thingy">
+<!--  <div class = "col">Stuff</div>-->
+<!--      <div class = "col">-->
+        <center><h1>Mealbucks</h1></center>
+        <div id="chat-container">
+          <div id="chat-messages">this is a message area</div>
+          <div id="chat-input">
+            <input type="text" id="user-input" placeholder="Type your message here...">
+            <button id="send-button">Send</button>
+          </div>
         </div>
-      </div>
+<!--      </div>-->
     </div>
-
 
   </body>
 </html>
