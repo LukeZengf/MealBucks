@@ -15,6 +15,7 @@
         height: 30px;
         background-color: #2f3241;
         -webkit-app-region: drag;
+        z-index: 10;
       }
       html,
       body{
@@ -41,6 +42,49 @@
         border-radius: 10px;
         background-color: #000000;
       }
+      #sidebar {
+        position: absolute;
+        top: 0;
+        left: -200px;
+        width: 200px;
+        height: 100%;
+        color: black;
+        background-color: #eee;
+        transition: left 0.5s;
+      }
+
+      #sidebar.visible {
+        left: 0;
+      }
+
+      #toggle-sidebar {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background-color: #ccc;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: left 0.5s;
+      }
+
+      #toggle-sidebar.visible {
+        left: 200px;
+      }
+
+      #toggle-sidebar svg {
+        fill: #fff;
+        transition: transform 0.5s;
+      }
+
+      #toggle-sidebar.visible svg {
+        transform: rotate(180deg);
+      }
+
+
     </style>
     <link href='assets/css/styles.css' rel='stylesheet'/>
     <script>
@@ -97,6 +141,25 @@
         });
 
         sendButton.addEventListener('click', handleMessage);
+
+        // Get references to the toggle button and sidebar
+        const toggleButton = document.getElementById('toggle-sidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        // Add an event listener to the toggle button
+        toggleButton.addEventListener('click', () => {
+          // Toggle the "visible" class on the sidebar and toggle button
+          sidebar.classList.toggle('visible');
+          toggleButton.classList.toggle('visible');
+        });
+
+        // Add an event listener to the document object to close the sidebar when the user clicks outside of it
+        document.addEventListener('click', (event) => {
+          if (!sidebar.contains(event.target) && !toggleButton.contains(event.target)) {
+            sidebar.classList.remove('visible');
+            toggleButton.classList.remove('visible');
+          }
+        });
       });
 
     </script>
@@ -104,8 +167,19 @@
   </head>
   <body>
     <div id="bar"></div>
+    <button id="toggle-sidebar">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+        <path fill="currentColor" d="M3 18h18v-2H3v2zM3 13h18v-2H3v2zM3 6v2h18V6H3z"/>
+      </svg>
+    </button>
+    
+    
+    <div id="sidebar">
+      <h2>Sidebar</h2>
+      <p>This is some sidebar content.</p>
+    </div>
+
     <div id = "thingy">
-<!--  <div class = "col">Stuff</div>-->
         <center><h1>Mealbucks</h1></center>
         <div id="chat-container">
           <div id="chat-messages">this is a message area</div>
