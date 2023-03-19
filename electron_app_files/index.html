@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link href='https://fonts.googleapis.com/css?family=Cabin' rel='stylesheet'>
     <link href='assets/css/styles.css' rel='stylesheet'/>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -31,8 +32,24 @@
           .catch(error => console.error(error));
         }
 
-        function addMessage(user, message) {
+        // function addMessage(user, message) {
 
+        //   const messageElement = document.createElement('div');
+        //   messageElement.classList.add('message');
+
+        //   const userElement = document.createElement('span');
+        //   userElement.classList.add('user');
+        //   userElement.innerText = user;
+
+        //   const messageTextElement = document.createElement('span');
+        //   messageTextElement.innerText = message;
+
+        //   messageElement.appendChild(userElement);
+        //   messageElement.appendChild(messageTextElement);
+
+        //   chatMessages.appendChild(messageElement);
+        // }
+        function addMessage(user, message) {
           const messageElement = document.createElement('div');
           messageElement.classList.add('message');
 
@@ -40,14 +57,81 @@
           userElement.classList.add('user');
           userElement.innerText = user;
 
-          const messageTextElement = document.createElement('span');
-          messageTextElement.innerText = message;
+          // Split the message into parts using "```" as a separator
+          const parts = message.split("```");
 
-          messageElement.appendChild(userElement);
-          messageElement.appendChild(messageTextElement);
+          // Loop through the parts and create an element for each part
+          for (let i = 0; i < parts.length; i++) {
+            const part = parts[i];
+
+            // If this is an odd-numbered part (i.e. it was enclosed in "```"), create a div element and apply the code-block style
+            if (i % 2 === 1) {
+              const div = document.createElement('div');
+              div.classList.add('code-block');
+              div.innerText = part;
+
+              // Add an event listener to save the code block content to the sidebar when clicked
+              div.addEventListener('click', () => {
+                saveToSidebar(part);
+              });
+
+              messageElement.appendChild(div);
+            } else {
+              // Otherwise, create a span element
+              const span = document.createElement('span');
+              span.innerText = part;
+              messageElement.appendChild(span);
+            }
+          }
+
+          messageElement.insertBefore(userElement, messageElement.firstChild);
 
           chatMessages.appendChild(messageElement);
         }
+
+        // Function to save content to the sidebar
+        function saveToSidebar(content) {
+          // Get a reference to the sidebar element
+          const sidebar = document.getElementById('sidebar');
+
+          // Create a new paragraph element with the content
+          const p = document.createElement('p');
+          p.innerText = content;
+
+          // Append the paragraph element to the sidebar
+          sidebar.appendChild(p);
+
+          // Save the content to local storage
+          let savedContent = localStorage.getItem('sidebarContent');
+          if (savedContent) {
+            savedContent = JSON.parse(savedContent);
+          } else {
+            savedContent = [];
+          }
+          savedContent.push(content);
+          localStorage.setItem('sidebarContent', JSON.stringify(savedContent));
+        }
+
+        // // Function to load saved content from local storage and add it to the sidebar
+        // function loadSidebar() {
+        //   // Get a reference to the sidebar element
+        //   const sidebar = document.getElementById('sidebar');
+
+        //   // Load saved content from local storage
+        //   let savedContent = localStorage.getItem('sidebarContent');
+        //   if (savedContent) {
+        //     savedContent = JSON.parse(savedContent);
+
+        //     // Loop through the saved content and create a paragraph element for each item
+        //     for (const item of savedContent) {
+        //       const p = document.createElement('p');
+        //       p.innerText = item;
+        //       sidebar.appendChild(p);
+        //     }
+        //   }
+        // }
+        // // Call loadSidebar when page is loaded
+        // window.addEventListener('load', loadSidebar);
 
         chatInput.addEventListener('keydown', (event) => {
           if (event.keyCode === 13) {
@@ -82,28 +166,132 @@
   </head>
   <body>
     <div id="bar"></div>
-    <button id="toggle-sidebar">
+    <button id="toggle-sidebar" style = "background-color: #4CAF50;">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-        <path fill="currentColor" d="M3 18h18v-2H3v2zM3 13h18v-2H3v2zM3 6v2h18V6H3z"/>
+        <path fill="white" d="M3 18h18v-2H3v2zM3 13h18v-2H3v2zM3 6v2h18V6H3z"/>
       </svg>
     </button>
     
     
     <div id="sidebar">
+      <br>
+      <center>
       <h2>Sidebar</h2>
       <p>This is some sidebar content.</p>
+      <button id = "showSavedBlocksButton">Recipes</button>
+      </center>
     </div>
 
     <div id = "thingy">
         <center><h1>Mealbucks</h1></center>
         <div id="chat-container">
-          <div id="chat-messages">this is a message area</div>
+          <div id="chat-messages"><p style="font-family: 'Courier New', Courier, monospace; margin-left: 5px;">This is a message area</p></div>
           <div id="chat-input">
             <input type="text" id="user-input" placeholder="Type your message here...">
             <button id="send-button">Send</button>
           </div>
         </div>
     </div>
+
+    <script>
+      // // Function to show saved code blocks in a new view
+      // function showSavedBlocks() {
+      //   // Hide current view
+      //   const currentView = document.getElementById('thingy');
+      //   currentView.style.display = 'none';
+
+      //   // Show saved blocks view
+      //   const savedBlocksView = document.createElement('div');
+      //   document.body.appendChild(savedBlocksView);
+
+      //   // Load saved content from local storage
+      //   let savedContent = localStorage.getItem('sidebarContent');
+      //   if (savedContent) {
+      //     savedContent = JSON.parse(savedContent);
+
+      //     // Create HTML content for the new view
+      //     let html = '<br><h1>Saved Blocks</h1>';
+      //     html += '<button id="backButton">Back</button>';
+      //     for (const item of savedContent) {
+      //       html += `<pre>${item}</pre>`;
+      //     }
+
+      //     // Set the innerHTML of the saved blocks view element
+      //     savedBlocksView.innerHTML = html;
+
+      //     // Add event listener to Back button to show current view when clicked
+      //     document.getElementById('backButton').addEventListener('click', () => {
+      //       currentView.style.display = 'block';
+      //       document.body.removeChild(savedBlocksView);
+      //     });
+      //   }
+      // }
+
+      // // Add event listener to button in sidebar to call showSavedBlocks when clicked
+      // document.getElementById('showSavedBlocksButton').addEventListener('click', showSavedBlocks);
+      // Function to show saved code blocks in a new view
+      function showSavedBlocks() {
+        // Hide current view
+        const currentView = document.getElementById('thingy');
+        currentView.style.display = 'none';
+
+        // Show saved blocks view
+        const savedBlocksView = document.createElement('div');
+        document.body.appendChild(savedBlocksView);
+
+        // Load saved content from local storage
+        let savedContent = localStorage.getItem('sidebarContent');
+        if (savedContent) {
+          savedContent = JSON.parse(savedContent);
+
+          // Create HTML content for the new view
+          let html = '<br><h1>Saved Code Blocks</h1>';
+          html += '<button id="backButton">Back</button>';
+          for (let i = 0; i < savedContent.length; i++) {
+            html += `<pre>${savedContent[i]}</pre>`;
+            html += `<button class="deleteButton" data-index="${i}">Delete</button>`;
+            html += `<button class="editButton" data-index="${i}">Edit</button>`;
+          }
+
+          // Set the innerHTML of the saved blocks view element
+          savedBlocksView.innerHTML = html;
+
+          // Add event listener to Back button to show current view when clicked
+          document.getElementById('backButton').addEventListener('click', () => {
+            currentView.style.display = 'block';
+            document.body.removeChild(savedBlocksView);
+          });
+
+          // Add event listeners to Delete buttons to delete corresponding code block when clicked
+          const deleteButtons = document.querySelectorAll('.deleteButton');
+          for (const button of deleteButtons) {
+            button.addEventListener('click', (event) => {
+              const index = event.target.getAttribute('data-index');
+              savedContent.splice(index, 1);
+              localStorage.setItem('sidebarContent', JSON.stringify(savedContent));
+              showSavedBlocks();
+            });
+          }
+
+          // Add event listeners to Edit buttons to edit corresponding code block when clicked
+          const editButtons = document.querySelectorAll('.editButton');
+          for (const button of editButtons) {
+            button.addEventListener('click', (event) => {
+              const index = event.target.getAttribute('data-index');
+              const newValue = prompt(`Edit code block #${index}:`, savedContent[index]);
+              if (newValue !== null) {
+                savedContent[index] = newValue;
+                localStorage.setItem('sidebarContent', JSON.stringify(savedContent));
+                showSavedBlocks();
+              }
+            });
+          }
+        }
+      }
+
+      // Add event listener to button in sidebar to call showSavedBlocks when clicked
+      document.getElementById('showSavedBlocksButton').addEventListener('click', showSavedBlocks);
+    </script>
 
   </body>
 </html>
