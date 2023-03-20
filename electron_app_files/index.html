@@ -176,8 +176,8 @@
     <div id="sidebar">
       <br>
       <center>
-      <h2>Sidebar</h2>
-      <p>This is some sidebar content.</p>
+      <h2></h2>
+      <p>Use the recipes button to take a look at your saved recipes.</p>
       <button id = "showSavedBlocksButton">Recipes</button>
       </center>
     </div>
@@ -194,50 +194,26 @@
     </div>
 
     <script>
-      // // Function to show saved code blocks in a new view
-      // function showSavedBlocks() {
-      //   // Hide current view
-      //   const currentView = document.getElementById('thingy');
-      //   currentView.style.display = 'none';
-
-      //   // Show saved blocks view
-      //   const savedBlocksView = document.createElement('div');
-      //   document.body.appendChild(savedBlocksView);
-
-      //   // Load saved content from local storage
-      //   let savedContent = localStorage.getItem('sidebarContent');
-      //   if (savedContent) {
-      //     savedContent = JSON.parse(savedContent);
-
-      //     // Create HTML content for the new view
-      //     let html = '<br><h1>Saved Blocks</h1>';
-      //     html += '<button id="backButton">Back</button>';
-      //     for (const item of savedContent) {
-      //       html += `<pre>${item}</pre>`;
-      //     }
-
-      //     // Set the innerHTML of the saved blocks view element
-      //     savedBlocksView.innerHTML = html;
-
-      //     // Add event listener to Back button to show current view when clicked
-      //     document.getElementById('backButton').addEventListener('click', () => {
-      //       currentView.style.display = 'block';
-      //       document.body.removeChild(savedBlocksView);
-      //     });
-      //   }
-      // }
-
-      // // Add event listener to button in sidebar to call showSavedBlocks when clicked
-      // document.getElementById('showSavedBlocksButton').addEventListener('click', showSavedBlocks);
       // Function to show saved code blocks in a new view
       function showSavedBlocks() {
         // Hide current view
         const currentView = document.getElementById('thingy');
         currentView.style.display = 'none';
+        
+        // Remove previous saved blocks view
+        const prevSavedBlocksView = document.getElementById('savedBlocksView');
+        if (prevSavedBlocksView) {
+          document.body.removeChild(prevSavedBlocksView);
+        }
 
         // Show saved blocks view
         const savedBlocksView = document.createElement('div');
+        savedBlocksView.setAttribute('id', 'savedBlocksView');
         document.body.appendChild(savedBlocksView);
+
+        // // Show saved blocks view
+        // const savedBlocksView = document.createElement('div');
+        // document.body.appendChild(savedBlocksView);
 
         // Load saved content from local storage
         let savedContent = localStorage.getItem('sidebarContent');
@@ -245,7 +221,7 @@
           savedContent = JSON.parse(savedContent);
 
           // Create HTML content for the new view
-          let html = '<br><h1>Saved Code Blocks</h1>';
+          let html = '<br><h1>Saved Recipes</h1>';
           html += '<button id="backButton">Back</button>';
           for (let i = 0; i < savedContent.length; i++) {
             html += `<pre>${savedContent[i]}</pre>`;
@@ -278,16 +254,35 @@
           for (const button of editButtons) {
             button.addEventListener('click', (event) => {
               const index = event.target.getAttribute('data-index');
-              const newValue = prompt(`Edit code block #${index}:`, savedContent[index]);
-              if (newValue !== null) {
-                savedContent[index] = newValue;
+              const codeBlock = document.querySelectorAll('pre')[index];
+              const textArea = document.createElement('textarea');
+              textArea.value = savedContent[index];
+              const buttonDiv = document.createElement('div');
+              const saveButton = document.createElement('button');
+              saveButton.textContent = 'Save';
+              saveButton.addEventListener('click', () => {
+                savedContent[index] = textArea.value;
                 localStorage.setItem('sidebarContent', JSON.stringify(savedContent));
                 showSavedBlocks();
-              }
+              });
+              const cancelButton = document.createElement('button');
+              cancelButton.textContent = 'Cancel';
+              cancelButton.addEventListener('click', () => {
+                savedBlocksView.replaceChild(codeBlock, div);
+              });
+              buttonDiv.appendChild(saveButton);
+              buttonDiv.appendChild(cancelButton);
+              const div = document.createElement('div');
+              div.appendChild(textArea);
+              div.appendChild(buttonDiv);
+              savedBlocksView.replaceChild(div, codeBlock);
             });
           }
         }
       }
+
+      // Add event listener to button in sidebar to call showSavedBlocks when clicked
+      // document.getElementById('showSavedBlocksButton').addEventListener('click', showSavedBlocks);
 
       // Add event listener to button in sidebar to call showSavedBlocks when clicked
       document.getElementById('showSavedBlocksButton').addEventListener('click', showSavedBlocks);
