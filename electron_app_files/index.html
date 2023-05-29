@@ -3,8 +3,16 @@
   <head>
     <link href='https://fonts.googleapis.com/css?family=Cabin' rel='stylesheet'>
     <link href='assets/css/styles.css' rel='stylesheet'/>
+    <link>
     <script>
+
       document.addEventListener("DOMContentLoaded", function () {
+        // document.getElementById('saveButton').addEventListener('click', () => {
+        //   const data = { asdf: 'someValue' };
+        //   console.log("brother");
+        //   window.api.send('save-data', data);
+        // });
+
         const chatMessages = document.getElementById('chat-messages');
         const userInput = document.getElementById('user-input');
         const sendButton = document.getElementById('send-button');
@@ -31,24 +39,6 @@
           })
           .catch(error => console.error(error));
         }
-
-        // function addMessage(user, message) {
-
-        //   const messageElement = document.createElement('div');
-        //   messageElement.classList.add('message');
-
-        //   const userElement = document.createElement('span');
-        //   userElement.classList.add('user');
-        //   userElement.innerText = user;
-
-        //   const messageTextElement = document.createElement('span');
-        //   messageTextElement.innerText = message;
-
-        //   messageElement.appendChild(userElement);
-        //   messageElement.appendChild(messageTextElement);
-
-        //   chatMessages.appendChild(messageElement);
-        // }
         function addMessage(user, message) {
           const messageElement = document.createElement('div');
           messageElement.classList.add('message');
@@ -161,6 +151,8 @@
         });
       });
 
+
+
     </script>
 
   </head>
@@ -183,7 +175,7 @@
     </div>
 
     <div id = "thingy">
-        <center><h1>Mealbucks</h1></center>
+        <center><h1>MealBucks</h1></center>
         <div id="chat-container">
           <div id="chat-messages"><p style="font-family: 'Courier New', Courier, monospace; margin-left: 5px;">This is a message area</p></div>
           <div id="chat-input">
@@ -192,6 +184,7 @@
           </div>
         </div>
     </div>
+    <button id = "saveButton">asdf</button>
 
     <script>
       // Function to show saved code blocks in a new view
