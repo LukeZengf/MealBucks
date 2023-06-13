@@ -40,12 +40,13 @@ body {
 #sidebar {
     position: fixed;
     top: 0;
-    left: -200px;
-    width: 200px;
+    left: calc(-100px - 10%);
+    width: calc(100px + 10%);
     height: 100%;
     color: white;
     background-color: #141616;
     transition: left 0.5s;
+    text-align: center;
 }
 
 #sidebar.visible {
@@ -54,20 +55,20 @@ body {
 
 #toggle-sidebar {
     position: fixed;
-    top: 60px;
-    left: -20px;
+    top: 25px;
+    left: 5px;
     transform: translateY(-50%);
     width: 40px;
     height: 40px;
     background-color: #ccc;
     border: none;
-    border-radius: 50%;
+    border-radius: 10%;
     cursor: pointer;
     transition: left 0.5s;
 }
 
 #toggle-sidebar.visible {
-    left: 180px;
+    left: calc(105px + 10%);
 }
 
 #toggle-sidebar svg {
@@ -157,6 +158,10 @@ body {
 
 #chat-input textarea {
     height: 16px;
+    min-height: 16px; /* The initial height */
+    max-height: 150px; /* The maximum height */
+    overflow-y: scroll; /* Add a scrollbar when necessary */
+    resize: none; /* Remove the ability for the user to resize */
     width: calc(100% - 20px);
     border-radius: 10px;
     font-family: monospace;
