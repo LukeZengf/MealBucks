@@ -82,12 +82,13 @@ document.addEventListener("DOMContentLoaded", function () {
         // Get a reference to the sidebar element
         const sidebar = document.getElementById('sidebar');
 
-        // Create a new paragraph element with the content
-        const p = document.createElement('p');
-        p.innerText = content;
+        // // Create a new paragraph element with the content
+        // const p = document.createElement('p');
+        // p.innerText = content;
 
-        // Append the paragraph element to the sidebar
-        sidebar.appendChild(p);
+        // // Append the paragraph element to the sidebar
+        // sidebar.appendChild(p);
+        console.log(content);
 
         // Save the content to local storage
         let savedContent = localStorage.getItem('sidebarContent');
