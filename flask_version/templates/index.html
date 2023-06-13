@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Cabin' rel='stylesheet'>
+    <link href='assets/css/styles.css' rel='stylesheet' />
+    <script src="assets/scripts/scripts.js"></script>
+</head>
+
+<body>
+    <button id="toggle-sidebar"
+        style="background-color: #4CAF50; display: flex; align-items: center; justify-content: center; height: 40px; width: 40px; border: none; padding: 0;">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="white" width="30" height="30" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M4 11h16v2H4zm0-4h16v2H4zm0 8h16v2H4z" />
+        </svg>
+    </button>
+    <div id="sidebar">
+        <br>
+        <h2></h2>
+        <p>Use the recipes button to take a look at your saved recipes.</p>
+        <button id="showSavedBlocksButton">Recipes</button>
+    </div>
+
+    <div id="main_block">
+        <div id="chat-container">
+            <div id="chat-messages">
+                <p style="font-family: 'Courier New', Courier, monospace; margin-left: 5px; text-align: center;">This is
+                    a message area</p>
+            </div>
+            <div id="chat-input">
+                <textarea id="user-input" placeholder="Type your message here..." rows="1"></textarea>
+                <button id="send-button">Send</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
