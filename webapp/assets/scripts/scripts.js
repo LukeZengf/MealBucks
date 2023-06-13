@@ -137,4 +137,13 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById('send-button').click();
         }
     });
+
+    document.getElementById("showSavedBlocksButton").addEventListener('click', () =>{
+    
+        fetch('/webapp/saved_data.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('main_block').innerHTML = html;
+            });
+    })
 });
